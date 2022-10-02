@@ -1,14 +1,41 @@
 import { useForm } from "react-hook-form";
+import { useState } from "react";
+import { authService } from "../firebase";
 
 export default function Auth() {
+  const [newAccount, setNewAccount] = useState(true);
   const {
     register,
     handleSubmit,
     formState: { isSubmitting, errors },
   } = useForm();
+  const toggleAccount = () => setNewAccount((prev) => !prev);
   return (
     <div>
-      <form onSubmit={handleSubmit((data) => console.log(data.email))}>
+      <form
+        onSubmit={handleSubmit(async (formData) => {
+          const { email, password } = formData;
+          try {
+            let data;
+            if (newAccount) {
+              // create account
+              data = await authService.createUserWithEmailAndPassword(
+                email,
+                password
+              );
+            } else {
+              // sign in
+              data = await authService.signInWithEmailAndPassword(
+                email,
+                password
+              );
+            }
+            console.log(data);
+          } catch (error) {
+            alert(error);
+          }
+        })}
+      >
         <div>
           <label htmlFor="email">이메일</label>
           <input
@@ -46,8 +73,17 @@ export default function Auth() {
           {errors.password && <span>{errors.password.message}</span>}
         </div>
         <button type="submit" disabled={isSubmitting}>
-          로그인
+          {newAccount ? "회원가입" : "로그인"}
         </button>
+        <span
+          style={{
+            cursor: "pointer",
+            userSelect: "none",
+          }}
+          onClick={toggleAccount}
+        >
+          {newAccount ? "로그인" : "회원가입"}
+        </span>
       </form>
     </div>
   );
