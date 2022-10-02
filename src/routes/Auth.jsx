@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-import { authService } from "../firebase";
+import { authService, firebaseInstance } from "../firebase";
 
 export default function Auth() {
   const [newAccount, setNewAccount] = useState(true);
@@ -10,6 +10,16 @@ export default function Auth() {
     formState: { isSubmitting, errors },
   } = useForm();
   const toggleAccount = () => setNewAccount((prev) => !prev);
+  const onSocialClick = async (e) => {
+    const {
+      target: { name },
+    } = e;
+    let provider;
+    if (name === "google") {
+      provider = new firebaseInstance.auth.GoogleAuthProvider();
+    }
+    await authService.signInWithPopup(provider);
+  };
   return (
     <div>
       <form
@@ -85,6 +95,11 @@ export default function Auth() {
           {newAccount ? "로그인" : "회원가입"}
         </span>
       </form>
+      <div>
+        <button onClick={onSocialClick} name="google">
+          Continue with Google
+        </button>
+      </div>
     </div>
   );
 }

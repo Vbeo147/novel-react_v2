@@ -9,7 +9,6 @@ export default function App() {
     authService.onAuthStateChanged((user) => {
       if (user) {
         setUserObj(user);
-        console.log(user);
       } else {
         setUserObj(null);
       }
