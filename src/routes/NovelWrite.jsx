@@ -37,7 +37,7 @@ export default function NovelWrite({ userObj }) {
         <div>
           <textarea
             onChange={onChange}
-            value={text}
+            value={text || ""}
             ref={textRef}
             required
           ></textarea>
