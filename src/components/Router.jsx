@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "../routes/Home";
 import Auth from "../routes/Auth";
+import NovelWrite from "../routes/NovelWrite";
 
 export default function AppRouter({ isLoggedIn, userObj }) {
   return (
@@ -9,6 +10,11 @@ export default function AppRouter({ isLoggedIn, userObj }) {
         {isLoggedIn ? (
           <>
             <Route exact path="/" element={<Home />} />
+            <Route
+              exact
+              path="/write"
+              element={<NovelWrite userObj={userObj} />}
+            />
           </>
         ) : (
           <>
