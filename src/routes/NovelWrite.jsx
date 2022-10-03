@@ -1,53 +1,56 @@
-import { useState, useRef } from "react";
+import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { dbService } from "../firebase";
 
 export default function NovelWrite({ userObj }) {
-  const [Value, setValue] = useState({ title: "", text: "" });
-  const { title, text } = Value;
-  const titleRef = useRef();
-  const textRef = useRef();
+  const {
+    register,
+    handleSubmit,
+    formState: { isSubmitting },
+  } = useForm();
   const navigate = useNavigate();
   const onHome = () => navigate("/");
-  const onChange = () => {
-    setValue({ title: titleRef.current.value, text: textRef.current.value });
-  };
-  const onSubmit = async (e) => {
-    e.preventDefault();
-    const novelObj = {
-      novel: {
-        title,
-        text,
-      },
-      creatorId: userObj.uid,
-      createdAt: Date.now(),
-    };
-    await dbService.collection("novel").add(novelObj);
-    onHome();
-  };
   return (
     <div>
-      <form onSubmit={onSubmit}>
+      <form
+        onSubmit={handleSubmit(async (formData) => {
+          const { title, text } = formData;
+          const novelObj = {
+            novel: {
+              title,
+              text,
+            },
+            creatorId: userObj.uid,
+            createdAt: Date.now(),
+          };
+          await dbService.collection("novel").add(novelObj);
+          onHome();
+        })}
+      >
         <div>
           <input
-            onChange={onChange}
-            value={title || ""}
+            id="title"
             type="text"
+            name="title"
             placeholder="제목"
-            ref={titleRef}
+            {...register("title")}
             required
           />
         </div>
         <div>
-          <textarea
-            onChange={onChange}
-            value={text || ""}
-            ref={textRef}
+          <input
+            id="text"
+            type="text"
+            name="text"
+            placeholder="내용"
+            {...register("text")}
             required
-          ></textarea>
+          />
         </div>
         <div>
-          <button type="submit">Enter</button>
+          <button type="submit" disabled={isSubmitting}>
+            Enter
+          </button>
           <button type="button" onClick={onHome}>
             Close
           </button>
