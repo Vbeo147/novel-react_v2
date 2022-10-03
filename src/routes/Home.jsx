@@ -1,11 +1,15 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import NovelPosts from "../components/NovelPosts";
+import NovelMap from "../components/NovelMap";
+import Pagenation from "../components/Pagenation";
 import { dbService } from "../firebase";
 
 export default function Home({ userObj }) {
   const [novel, setNovel] = useState([]);
   const [sort, setSort] = useState(true);
+  const [page, setPage] = useState(1);
+  const limit = 2;
+  const offset = (page - 1) * limit;
   useEffect(() => {
     dbService.collection("novel").onSnapshot((snapshot) => {
       const novelArray = snapshot.docs.map((doc) => ({
@@ -45,12 +49,20 @@ export default function Home({ userObj }) {
         <button onClick={toggleSortClick}>{sort ? "Sort" : "Reverse"}</button>
       </div>
       <div>
-        {novel.map((novels) => (
+        {novel.slice(offset, offset + limit).map((novels) => (
           <div key={novels.id}>
-            <NovelPosts userObj={userObj} novelObj={novels} novelArr={novel} />
+            <NovelMap userObj={userObj} novelObj={novels} />
           </div>
         ))}
       </div>
+      {novel.length !== 0 ? (
+        <Pagenation
+          total={novel.length}
+          limit={limit}
+          page={page}
+          setPage={setPage}
+        />
+      ) : null}
     </div>
   );
 }
