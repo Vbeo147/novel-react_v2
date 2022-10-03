@@ -1,9 +1,34 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import NovelPosts from "../components/NovelPosts";
+import { dbService } from "../firebase";
 
 export default function Home({ userObj }) {
+  const [novel, setNovel] = useState([]);
   const [sort, setSort] = useState(true);
+  useEffect(() => {
+    dbService.collection("novel").onSnapshot((snapshot) => {
+      const novelArray = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setNovel(novelArray);
+    });
+  }, []);
+  const NovelSort = () => {
+    novel.sort((prevIndex, nextIndex) => {
+      if (prevIndex.createdAt > nextIndex.createdAt) {
+        return Boolean(sort) ? 1 : -1;
+      } else if (prevIndex.createdAt < nextIndex.createdAt) {
+        return Boolean(sort) ? -1 : 1;
+      } else {
+        return 0;
+      }
+    });
+  };
+
+  NovelSort();
+
   const navigate = useNavigate();
   const toggleSortClick = () => setSort((prev) => !prev);
   return (
@@ -20,7 +45,11 @@ export default function Home({ userObj }) {
         <button onClick={toggleSortClick}>{sort ? "Sort" : "Reverse"}</button>
       </div>
       <div>
-        <NovelPosts sort={sort} userObj={userObj} />
+        {novel.map((novels) => (
+          <div key={novels.id}>
+            <NovelPosts userObj={userObj} novelObj={novels} novelArr={novel} />
+          </div>
+        ))}
       </div>
     </div>
   );
