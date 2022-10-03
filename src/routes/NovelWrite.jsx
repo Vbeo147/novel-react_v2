@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { dbService } from "../firebase";
 
 export default function NovelWrite({ userObj }) {
@@ -6,6 +7,8 @@ export default function NovelWrite({ userObj }) {
   const { title, text } = Value;
   const titleRef = useRef();
   const textRef = useRef();
+  const navigate = useNavigate();
+  const onHome = () => navigate("/");
   const onChange = () => {
     setValue({ title: titleRef.current.value, text: textRef.current.value });
   };
@@ -20,6 +23,7 @@ export default function NovelWrite({ userObj }) {
       createdAt: Date.now(),
     };
     await dbService.collection("novel").add(novelObj);
+    onHome();
   };
   return (
     <div>
@@ -42,7 +46,12 @@ export default function NovelWrite({ userObj }) {
             required
           ></textarea>
         </div>
-        <button type="submit">Enter</button>
+        <div>
+          <button type="submit">Enter</button>
+          <button type="button" onClick={onHome}>
+            Close
+          </button>
+        </div>
       </form>
     </div>
   );

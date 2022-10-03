@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "../routes/Home";
 import Auth from "../routes/Auth";
 import NovelWrite from "../routes/NovelWrite";
+import NovelModify from "../routes/NovelModify";
 
 export default function AppRouter({ isLoggedIn, userObj }) {
   return (
@@ -9,12 +10,13 @@ export default function AppRouter({ isLoggedIn, userObj }) {
       <Routes>
         {isLoggedIn ? (
           <>
-            <Route exact path="/" element={<Home />} />
+            <Route exact path="/" element={<Home userObj={userObj} />} />
             <Route
               exact
               path="/write"
               element={<NovelWrite userObj={userObj} />}
             />
+            <Route exact path="/modify/:id" element={<NovelModify />} />
           </>
         ) : (
           <>

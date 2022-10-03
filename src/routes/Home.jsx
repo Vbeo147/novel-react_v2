@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import NovelMap from "../components/NovelMap";
 
-export default function Home() {
+export default function Home({ userObj }) {
   const [sort, setSort] = useState(true);
   const navigate = useNavigate();
   const toggleSortClick = () => setSort((prev) => !prev);
@@ -20,7 +20,7 @@ export default function Home() {
         <button onClick={toggleSortClick}>{sort ? "Sort" : "Reverse"}</button>
       </div>
       <div>
-        <NovelMap sort={sort} />
+        <NovelMap sort={sort} userObj={userObj} />
       </div>
     </div>
   );
