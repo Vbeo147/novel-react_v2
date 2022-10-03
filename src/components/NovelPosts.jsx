@@ -1,15 +1,19 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { dbService } from "../firebase";
+import Pagenation from "./Pagenation";
 
 export default function NovelMap({ sort, userObj }) {
   const [novel, setNovel] = useState([]);
+  const [limit, setLimit] = useState(5);
+  const [page, setPage] = useState(1);
+  const offset = (page - 1) * limit;
   const navigate = useNavigate();
   const NovelSort = () => {
-    novel.sort((a, b) => {
-      if (a.createdAt > b.createdAt) {
+    novel.sort((prevIndex, nextIndex) => {
+      if (prevIndex.createdAt > nextIndex.createdAt) {
         return Boolean(sort) ? 1 : -1;
-      } else if (a.createdAt < b.createdAt) {
+      } else if (prevIndex.createdAt < nextIndex.createdAt) {
         return Boolean(sort) ? -1 : 1;
       } else {
         return 0;
@@ -33,7 +37,7 @@ export default function NovelMap({ sort, userObj }) {
   };
   return (
     <div>
-      {novel.map((novels) => (
+      {novel.slice(offset, offset + limit).map((novels) => (
         <div key={novels.id}>
           {novels.novel.title}
           {novels.creatorId === userObj.uid ? (
@@ -46,6 +50,14 @@ export default function NovelMap({ sort, userObj }) {
           ) : null}
         </div>
       ))}
+      <div>
+        <Pagenation
+          total={novel.length}
+          limit={limit}
+          page={page}
+          setPage={setPage}
+        />
+      </div>
     </div>
   );
 }
