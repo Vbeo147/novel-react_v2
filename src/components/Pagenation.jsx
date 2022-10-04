@@ -1,10 +1,10 @@
 import { v4 as uuidv4 } from "uuid";
 import { useState } from "react";
 
-export default function Pagenation({ total, limit, setPage }) {
+export default function Pagenation({ total, limit, setPage, BtnLimit }) {
   const [startIndex, setStartIndex] = useState(0);
   const [lastIndex, setLastIndex] = useState(
-    Math.ceil(total / limit) <= 5 ? Math.ceil(total / limit) : 5
+    Math.ceil(total / limit) <= BtnLimit ? Math.ceil(total / limit) : BtnLimit
   );
   const numPages = Math.ceil(total / limit);
   let arr = [];
@@ -21,7 +21,9 @@ export default function Pagenation({ total, limit, setPage }) {
           onClick={() => {
             setStartIndex((prev) => prev * 0);
             setLastIndex(
-              Math.ceil(total / limit) <= 5 ? Math.ceil(total / limit) : 5
+              Math.ceil(total / limit) <= BtnLimit
+                ? Math.ceil(total / limit)
+                : BtnLimit
             );
           }}
           disabled={startIndex === 0}
@@ -33,10 +35,10 @@ export default function Pagenation({ total, limit, setPage }) {
             key={uuidv4()}
             onClick={() => {
               setPage(item + 1);
-              if (numPages > 5) {
+              if (numPages > BtnLimit) {
                 if (startIndex === item) {
                   setStartIndex((prev) => (prev !== 0 ? prev - 1 : prev));
-                  setLastIndex((prev) => (prev > 5 ? prev - 1 : prev));
+                  setLastIndex((prev) => (prev > BtnLimit ? prev - 1 : prev));
                 } else if (lastIndex === item + 1) {
                   if (lastIndex < total && numPages > lastIndex) {
                     setStartIndex((prev) => prev + 1);
@@ -51,7 +53,7 @@ export default function Pagenation({ total, limit, setPage }) {
         ))}
         <button
           onClick={() => {
-            setStartIndex(numPages - 5);
+            setStartIndex(numPages - BtnLimit);
             setLastIndex(numPages);
           }}
           disabled={lastIndex === numPages}

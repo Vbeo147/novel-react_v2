@@ -8,7 +8,8 @@ export default function Home({ userObj }) {
   const [novel, setNovel] = useState([]);
   const [sort, setSort] = useState(true);
   const [page, setPage] = useState(1);
-  const limit = 2;
+  const limit = 5;
+  const BtnLimit = 5;
   const offset = (page - 1) * limit;
   useEffect(() => {
     dbService.collection("novel").onSnapshot((snapshot) => {
@@ -46,7 +47,7 @@ export default function Home({ userObj }) {
         >
           Novel Write
         </button>
-        <button onClick={toggleSortClick}>{sort ? "Sort" : "Reverse"}</button>
+        <button onClick={toggleSortClick}>{sort ? "Reverse" : "Sort"}</button>
       </div>
       <div>
         {novel.slice(offset, offset + limit).map((novels) => (
@@ -56,7 +57,12 @@ export default function Home({ userObj }) {
         ))}
       </div>
       {novel.length !== 0 ? (
-        <Pagenation total={novel.length} limit={limit} setPage={setPage} />
+        <Pagenation
+          total={novel.length}
+          limit={limit}
+          setPage={setPage}
+          BtnLimit={BtnLimit}
+        />
       ) : null}
     </div>
   );
