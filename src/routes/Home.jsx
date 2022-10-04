@@ -10,6 +10,7 @@ export default function Home({ userObj }) {
   const [page, setPage] = useState(1);
   const limit = 5;
   const BtnLimit = 5;
+  const numPages = Math.ceil(novel.length / limit);
   const offset = (page - 1) * limit;
   useEffect(() => {
     dbService.collection("novel").onSnapshot((snapshot) => {
@@ -59,9 +60,9 @@ export default function Home({ userObj }) {
       {novel.length !== 0 ? (
         <Pagenation
           total={novel.length}
-          limit={limit}
-          setPage={setPage}
           BtnLimit={BtnLimit}
+          numPages={numPages}
+          setPage={setPage}
         />
       ) : null}
     </div>
