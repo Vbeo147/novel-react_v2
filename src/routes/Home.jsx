@@ -56,12 +56,7 @@ export default function Home({ userObj }) {
         ))}
       </div>
       {novel.length !== 0 ? (
-        <Pagenation
-          total={novel.length}
-          limit={limit}
-          page={page}
-          setPage={setPage}
-        />
+        <Pagenation total={novel.length} limit={limit} setPage={setPage} />
       ) : null}
     </div>
   );

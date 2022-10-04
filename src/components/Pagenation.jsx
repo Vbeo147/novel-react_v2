@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 import { useState } from "react";
 
-export default function Pagenation({ total, limit, page, setPage }) {
+export default function Pagenation({ total, limit, setPage }) {
   const [startIndex, setStartIndex] = useState(0);
   const [lastIndex, setLastIndex] = useState(
     Math.ceil(total / limit) <= 5 ? Math.ceil(total / limit) : 5
@@ -17,7 +17,15 @@ export default function Pagenation({ total, limit, page, setPage }) {
   return (
     <>
       <nav>
-        <button onClick={() => setPage(page - 1)} disabled={page === 1}>
+        <button
+          onClick={() => {
+            setStartIndex((prev) => prev * 0);
+            setLastIndex(
+              Math.ceil(total / limit) <= 5 ? Math.ceil(total / limit) : 5
+            );
+          }}
+          disabled={startIndex === 0}
+        >
           &lt;
         </button>
         {arr.slice(startIndex, lastIndex).map((item) => (
@@ -27,30 +35,27 @@ export default function Pagenation({ total, limit, page, setPage }) {
               setPage(item + 1);
               if (numPages > 5) {
                 if (startIndex === item) {
-                  if (startIndex !== 0) {
-                    setStartIndex((prev) => prev - 1);
-                    if (lastIndex > 5) {
-                      setLastIndex((prev) => prev - 1);
-                    }
-                  }
+                  setStartIndex((prev) => (prev !== 0 ? prev - 1 : prev));
+                  setLastIndex((prev) => (prev > 5 ? prev - 1 : prev));
                 } else if (lastIndex === item + 1) {
-                  if (numPages > lastIndex) {
-                    setStartIndex((prev) =>
-                      lastIndex < total ? prev + 1 : prev + 0
-                    );
-                    setLastIndex((prev) =>
-                      prev < total ? prev + 1 : prev + 0
-                    );
+                  if (lastIndex < total && numPages > lastIndex) {
+                    setStartIndex((prev) => prev + 1);
+                    setLastIndex((prev) => prev + 1);
                   }
                 }
               }
             }}
-            aria-current={page === item + 1 ? "page" : null}
           >
             {item + 1}
           </button>
         ))}
-        <button onClick={() => setPage(page + 1)} disabled={page === numPages}>
+        <button
+          onClick={() => {
+            setStartIndex(numPages - 5);
+            setLastIndex(numPages);
+          }}
+          disabled={lastIndex === numPages}
+        >
           &gt;
         </button>
       </nav>
