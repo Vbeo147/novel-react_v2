@@ -8,7 +8,7 @@ export default function Home({ userObj }) {
   const [novel, setNovel] = useState([]);
   const [sort, setSort] = useState(true);
   const [page, setPage] = useState(1);
-  const limit = 5;
+  const limit = 2;
   const BtnLimit = 5;
   const numPages = Math.ceil(novel.length / limit);
   const offset = (page - 1) * limit;
@@ -63,6 +63,7 @@ export default function Home({ userObj }) {
           BtnLimit={BtnLimit}
           numPages={numPages}
           setPage={setPage}
+          page={page}
         />
       ) : null}
     </div>
