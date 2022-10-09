@@ -13,7 +13,16 @@ export default function NovelMap({ userObj, novelObj }) {
         {novelObj.attachmentUrl && (
           <img src={novelObj.attachmentUrl} width="50px" height="50px" alt="" />
         )}
-        {novelObj.novel.title}
+        <span
+          style={{
+            cursor: "pointer",
+          }}
+          onClick={() => {
+            navigate(`/result/${novelObj.id}`);
+          }}
+        >
+          {novelObj.novel.title}
+        </span>
         {novelObj.creatorId === userObj.uid ? (
           <>
             <button onClick={() => onDelete(novelObj.id)}>Delete</button>

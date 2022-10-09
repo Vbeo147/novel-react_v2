@@ -11,10 +11,10 @@ export default function Pagenation({
   const [lastIndex, setLastIndex] = useState(0);
   useEffect(() => {
     if (page !== numPages) {
-      setStartIndex(Math.floor(page / BtnLimit) * BtnLimit);
-      setLastIndex((page % numPages) * BtnLimit);
+      setStartIndex(Math.floor(page / BtnLimit) * (BtnLimit - 1));
+      setLastIndex(startIndex + Math.floor(BtnLimit / page));
     }
-  }, [page, BtnLimit, numPages, total]);
+  }, [page, BtnLimit, numPages, startIndex]);
   let arr = [];
   const arrMap = () => {
     Array(total + 1)
@@ -36,18 +36,16 @@ export default function Pagenation({
         >
           &lt;&lt;
         </button>
-        {arr
-          .slice(lastIndex < 5 ? lastIndex - 1 : startIndex, lastIndex)
-          .map((item) => (
-            <button
-              key={item}
-              onClick={() => {
-                setPage(item + 1);
-              }}
-            >
-              {item + 1}
-            </button>
-          ))}
+        {arr.slice(startIndex, lastIndex).map((item) => (
+          <button
+            key={item}
+            onClick={() => {
+              setPage(item + 1);
+            }}
+          >
+            {item + 1}
+          </button>
+        ))}
         <button
           onClick={() => {
             setPage(numPages);

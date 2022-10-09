@@ -3,7 +3,7 @@ import { useEffect, useState, useRef } from "react";
 import { dbService } from "../firebase";
 
 export default function NovelModify() {
-  let { id } = useParams();
+  const { id } = useParams();
   const navigate = useNavigate();
   const [Value, setValue] = useState();
   const titleRef = useRef();

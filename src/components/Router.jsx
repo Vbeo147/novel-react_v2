@@ -3,6 +3,7 @@ import Home from "../routes/Home";
 import Auth from "../routes/Auth";
 import NovelWrite from "../routes/NovelWrite";
 import NovelModify from "../routes/NovelModify";
+import NovelResult from "../routes/NovelResult";
 
 export default function AppRouter({ isLoggedIn, userObj }) {
   return (
@@ -17,6 +18,7 @@ export default function AppRouter({ isLoggedIn, userObj }) {
               element={<NovelWrite userObj={userObj} />}
             />
             <Route exact path="/modify/:id" element={<NovelModify />} />
+            <Route exact path="/result/:id" element={<NovelResult />} />
           </>
         ) : (
           <>
