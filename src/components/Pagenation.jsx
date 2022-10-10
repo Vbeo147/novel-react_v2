@@ -10,9 +10,11 @@ export default function Pagenation({
   const [startIndex, setStartIndex] = useState(0);
   const [lastIndex, setLastIndex] = useState(0);
   useEffect(() => {
+    const startCal = Math.floor(page / BtnLimit) * BtnLimit;
+    const lastCal = startIndex + BtnLimit;
     if (page !== numPages) {
-      setStartIndex(Math.floor(page / BtnLimit) * (BtnLimit - 1));
-      setLastIndex(startIndex + Math.floor(BtnLimit / page));
+      setStartIndex(startCal);
+      setLastIndex(lastCal > numPages ? numPages : lastCal);
     }
   }, [page, BtnLimit, numPages, startIndex]);
   let arr = [];
@@ -25,17 +27,32 @@ export default function Pagenation({
   console.log(
     `Start : ${startIndex}, Last : ${lastIndex}, Pages : ${numPages}`
   );
+  console.log(Math.floor(page / BtnLimit) * BtnLimit);
+  console.log(
+    startIndex + BtnLimit > numPages ? numPages : startIndex + BtnLimit
+  );
   return (
     <>
+      <div>현재 페이지 : {page}</div>
       <nav>
-        <button
-          onClick={() => {
-            setPage(1);
-          }}
-          disabled={startIndex === 0}
-        >
-          &lt;&lt;
-        </button>
+        <span>
+          <button
+            onClick={() => {
+              setPage(1);
+            }}
+            disabled={startIndex === 0}
+          >
+            &lt;&lt;
+          </button>
+          <button
+            onClick={() => {
+              setPage(page - 1);
+            }}
+            disabled={startIndex === 0}
+          >
+            &lt;
+          </button>
+        </span>
         {arr.slice(startIndex, lastIndex).map((item) => (
           <button
             key={item}
@@ -46,14 +63,24 @@ export default function Pagenation({
             {item + 1}
           </button>
         ))}
-        <button
-          onClick={() => {
-            setPage(numPages);
-          }}
-          disabled={lastIndex === numPages}
-        >
-          &gt;&gt;
-        </button>
+        <span>
+          <button
+            onClick={() => {
+              setPage(page + 1);
+            }}
+            disabled={lastIndex === numPages}
+          >
+            &gt;
+          </button>
+          <button
+            onClick={() => {
+              setPage(numPages - 1);
+            }}
+            disabled={lastIndex === numPages}
+          >
+            &gt;&gt;
+          </button>
+        </span>
       </nav>
     </>
   );
