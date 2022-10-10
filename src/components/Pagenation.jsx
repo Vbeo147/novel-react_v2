@@ -36,7 +36,7 @@ export default function Pagenation({
             onClick={() => {
               setPage(1);
             }}
-            disabled={startIndex === 0}
+            disabled={page === 1}
           >
             &lt;&lt;
           </button>
@@ -44,7 +44,7 @@ export default function Pagenation({
             onClick={() => {
               setPage(page - 1);
             }}
-            disabled={startIndex === 0}
+            disabled={page === 1}
           >
             &lt;
           </button>
@@ -64,15 +64,17 @@ export default function Pagenation({
             onClick={() => {
               setPage(page + 1);
             }}
-            disabled={lastIndex === numPages}
+            disabled={page === numPages}
           >
             &gt;
           </button>
           <button
             onClick={() => {
-              setPage(numPages - 1);
+              setPage(numPages);
+              setStartIndex(numPages - 1);
+              setLastIndex(numPages);
             }}
-            disabled={lastIndex === numPages}
+            disabled={page === numPages}
           >
             &gt;&gt;
           </button>
