@@ -27,10 +27,6 @@ export default function Pagenation({
   console.log(
     `Start : ${startIndex}, Last : ${lastIndex}, Pages : ${numPages}`
   );
-  console.log(Math.floor(page / BtnLimit) * BtnLimit);
-  console.log(
-    startIndex + BtnLimit > numPages ? numPages : startIndex + BtnLimit
-  );
   return (
     <>
       <div>현재 페이지 : {page}</div>
