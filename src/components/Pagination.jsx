@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-export default function Pagenation({
+export default function Pagination({
   total,
   BtnLimit,
   numPages,
@@ -12,11 +12,12 @@ export default function Pagenation({
   useEffect(() => {
     if (page !== numPages && page >= BtnLimit) {
       if (page === startIndex) {
-        setStartIndex((prev) => prev - BtnLimit);
-        setLastIndex((prev) => prev - BtnLimit);
-      } else if (page === lastIndex) {
-        setStartIndex((prev) => prev + BtnLimit - 1);
+        setStartIndex((prev) => prev - BtnLimit + 1);
+        setLastIndex((prev) => prev - BtnLimit + 1);
+      }
+      if (page === lastIndex) {
         setLastIndex((prev) => prev + BtnLimit - 1);
+        setStartIndex((prev) => prev + BtnLimit - 1);
       }
     }
   }, [page, startIndex, lastIndex, BtnLimit, numPages]);
@@ -26,7 +27,9 @@ export default function Pagenation({
       .fill()
       .map((_, index) => arr.push(index));
   };
+
   arrMap();
+
   console.log(
     `Start : ${startIndex}, Last : ${lastIndex}, Pages : ${numPages}`
   );
@@ -76,7 +79,7 @@ export default function Pagenation({
           <button
             onClick={() => {
               setPage(numPages);
-              setStartIndex(numPages - 1);
+              setStartIndex(numPages - BtnLimit);
               setLastIndex(numPages);
             }}
             disabled={page === numPages}

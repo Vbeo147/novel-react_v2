@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import NovelMap from "../components/NovelMap";
-import Pagenation from "../components/Pagenation";
+import Pagination from "../components/Pagination";
 import { dbService } from "../firebase";
 
 export default function Home({ userObj }) {
@@ -58,7 +58,7 @@ export default function Home({ userObj }) {
         ))}
       </div>
       {novel.length !== 0 ? (
-        <Pagenation
+        <Pagination
           total={novel.length}
           BtnLimit={BtnLimit}
           numPages={numPages}
