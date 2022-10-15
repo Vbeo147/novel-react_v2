@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { authService } from "../firebase";
 import AppRouter from "./Router";
+import "../css/reset.css";
 
 export default function App() {
   const [init, setInit] = useState(false);

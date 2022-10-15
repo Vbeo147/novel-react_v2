@@ -15,20 +15,6 @@ export default function Home({ userObj }) {
       setNovel(novelArray);
     });
   }, []);
-  const NovelSort = () => {
-    novel.sort((prevIndex, nextIndex) => {
-      if (prevIndex.createdAt > nextIndex.createdAt) {
-        return Boolean(sort) ? 1 : -1;
-      } else if (prevIndex.createdAt < nextIndex.createdAt) {
-        return Boolean(sort) ? -1 : 1;
-      } else {
-        return 0;
-      }
-    });
-  };
-
-  NovelSort();
-
   const navigate = useNavigate();
   const toggleSortClick = () => setSort((prev) => !prev);
   return (
@@ -44,7 +30,12 @@ export default function Home({ userObj }) {
         </button>
         <button onClick={toggleSortClick}>{sort ? "Reverse" : "Sort"}</button>
       </div>
-      <Pagination items={novel} userObj={userObj} itemsPerPage={1} />
+      <Pagination
+        items={novel}
+        userObj={userObj}
+        itemsPerPage={5}
+        sort={sort}
+      />
     </div>
   );
 }

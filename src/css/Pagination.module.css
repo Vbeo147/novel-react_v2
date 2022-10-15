@@ -1,26 +1,59 @@
-.active_btn {
-  border: 1px solid black;
+.pagination_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.previous_btn {
-  border: 1px solid black;
-  color: red;
-}
-
-.next_btn {
-  border: 1px solid black;
-  color: blue;
-}
-
-.pageination_container {
+.pagination_ul {
   display: flex;
   justify-content: center;
   align-items: center;
   list-style: none;
-  user-select: none;
-  cursor: pointer;
+  width: 50%;
+  border-top: 1px solid rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+  padding: 8px 0px 8px 0px;
 }
 
-.pageination_container li {
-  margin-right: 16px;
+.pagination_ul a {
+  width: inherit;
+  height: inherit;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pagination_ul li {
+  width: 30px;
+  height: 24px;
+  padding: 8px;
+  margin: 5px 2px 5px 2px;
+  font-size: 1.22em;
+  user-select: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pagination_ul li:hover {
+  background-color: lightgray;
+  border-radius: 10px;
+}
+
+.pagination_active_btn {
+  background-color: lightgray;
+  border-radius: 10px;
+}
+
+.pagination_previous_btn {
+  border-radius: 10px;
+  background-color: darkviolet;
+  font-weight: 600;
+}
+
+.pagination_next_btn {
+  border-radius: 10px;
+  background-color: darkviolet;
+  font-weight: 600;
 }

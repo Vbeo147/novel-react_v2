@@ -3,7 +3,7 @@ import ReactPaginate from "react-paginate";
 import NovelMap from "./NovelMap";
 import styles from "../css/Pagination.module.css";
 
-function Pagination({ itemsPerPage, items, userObj }) {
+function Pagination({ itemsPerPage, items, userObj, sort }) {
   const [currentItems, setCurrentItems] = useState(null);
   const [pageCount, setPageCount] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);
@@ -18,19 +18,21 @@ function Pagination({ itemsPerPage, items, userObj }) {
   };
   return (
     <>
-      <NovelMap novelObj={currentItems} userObj={userObj} />
-      <ReactPaginate
-        breakLabel="..."
-        nextLabel=">"
-        onPageChange={handlePageClick}
-        pageRangeDisplayed={3}
-        pageCount={pageCount}
-        previousLabel="<"
-        previousClassName={styles.previous_btn}
-        nextClassName={styles.next_btn}
-        containerClassName={styles.pageination_container}
-        activeClassName={styles.active_btn}
-      />
+      <NovelMap novelObj={currentItems} userObj={userObj} sort={sort} />
+      <div className={styles.pagination_container}>
+        <ReactPaginate
+          breakLabel="..."
+          nextLabel=">"
+          onPageChange={handlePageClick}
+          pageRangeDisplayed={3}
+          pageCount={pageCount}
+          previousLabel="<"
+          previousClassName={styles.pagination_previous_btn}
+          nextClassName={styles.pagination_next_btn}
+          containerClassName={styles.pagination_ul}
+          activeClassName={styles.pagination_active_btn}
+        />
+      </div>
     </>
   );
 }
