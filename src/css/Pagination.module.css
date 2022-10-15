@@ -1,0 +1,26 @@
+.active_btn {
+  border: 1px solid black;
+}
+
+.previous_btn {
+  border: 1px solid black;
+  color: red;
+}
+
+.next_btn {
+  border: 1px solid black;
+  color: blue;
+}
+
+.pageination_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  user-select: none;
+  cursor: pointer;
+}
+
+.pageination_container li {
+  margin-right: 16px;
+}

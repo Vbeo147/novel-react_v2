@@ -1,93 +1,38 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import ReactPaginate from "react-paginate";
+import NovelMap from "./NovelMap";
+import styles from "../css/Pagination.module.css";
 
-export default function Pagination({
-  total,
-  BtnLimit,
-  numPages,
-  setPage,
-  page,
-}) {
-  const [startIndex, setStartIndex] = useState(0);
-  const [lastIndex, setLastIndex] = useState(BtnLimit);
+function Pagination({ itemsPerPage, items, userObj }) {
+  const [currentItems, setCurrentItems] = useState(null);
+  const [pageCount, setPageCount] = useState(0);
+  const [itemOffset, setItemOffset] = useState(0);
   useEffect(() => {
-    if (page !== numPages && page >= BtnLimit) {
-      if (page === startIndex) {
-        setStartIndex((prev) => prev - BtnLimit + 1);
-        setLastIndex((prev) => prev - BtnLimit + 1);
-      }
-      if (page === lastIndex) {
-        setLastIndex((prev) => prev + BtnLimit - 1);
-        setStartIndex((prev) => prev + BtnLimit - 1);
-      }
-    }
-  }, [page, startIndex, lastIndex, BtnLimit, numPages]);
-  let arr = [];
-  const arrMap = () => {
-    Array(total + 1)
-      .fill()
-      .map((_, index) => arr.push(index));
+    const endOffset = itemOffset + itemsPerPage;
+    setCurrentItems(items.slice(itemOffset, endOffset));
+    setPageCount(Math.ceil(items.length / itemsPerPage));
+  }, [itemOffset, itemsPerPage, items]);
+  const handlePageClick = (event) => {
+    const newOffset = (event.selected * itemsPerPage) % items.length;
+    setItemOffset(newOffset);
   };
-
-  arrMap();
-
-  console.log(
-    `Start : ${startIndex}, Last : ${lastIndex}, Pages : ${numPages}`
-  );
   return (
     <>
-      <div>현재 페이지 : {page}</div>
-      <nav>
-        <span>
-          <button
-            onClick={() => {
-              setPage(1);
-              setStartIndex(0);
-              setLastIndex(BtnLimit);
-            }}
-            disabled={page === 1}
-          >
-            &lt;&lt;
-          </button>
-          <button
-            onClick={() => {
-              setPage(page - 1);
-            }}
-            disabled={page === 1}
-          >
-            &lt;
-          </button>
-        </span>
-        {arr.slice(startIndex, lastIndex).map((item) => (
-          <button
-            key={item}
-            onClick={() => {
-              setPage(item + 1);
-            }}
-          >
-            {item + 1}
-          </button>
-        ))}
-        <span>
-          <button
-            onClick={() => {
-              setPage(page + 1);
-            }}
-            disabled={page === numPages}
-          >
-            &gt;
-          </button>
-          <button
-            onClick={() => {
-              setPage(numPages);
-              setStartIndex(numPages - BtnLimit);
-              setLastIndex(numPages);
-            }}
-            disabled={page === numPages}
-          >
-            &gt;&gt;
-          </button>
-        </span>
-      </nav>
+      <NovelMap novelObj={currentItems} userObj={userObj} />
+      <ReactPaginate
+        breakLabel="..."
+        nextLabel=">"
+        onPageChange={handlePageClick}
+        pageRangeDisplayed={3}
+        pageCount={pageCount}
+        previousLabel="<"
+        previousClassName={styles.previous_btn}
+        nextClassName={styles.next_btn}
+        containerClassName={styles.pageination_container}
+        activeClassName={styles.active_btn}
+      />
     </>
   );
 }
+
+export default Pagination;

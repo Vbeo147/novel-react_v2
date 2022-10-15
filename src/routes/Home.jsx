@@ -1,17 +1,11 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import NovelMap from "../components/NovelMap";
 import Pagination from "../components/Pagination";
 import { dbService } from "../firebase";
 
 export default function Home({ userObj }) {
   const [novel, setNovel] = useState([]);
   const [sort, setSort] = useState(true);
-  const [page, setPage] = useState(1);
-  const limit = 1;
-  const BtnLimit = 5;
-  const numPages = Math.ceil(novel.length / limit);
-  const offset = (page - 1) * limit;
   useEffect(() => {
     dbService.collection("novel").onSnapshot((snapshot) => {
       const novelArray = snapshot.docs.map((doc) => ({
@@ -50,22 +44,7 @@ export default function Home({ userObj }) {
         </button>
         <button onClick={toggleSortClick}>{sort ? "Reverse" : "Sort"}</button>
       </div>
-      <div>
-        {novel.slice(offset, offset + limit).map((novels) => (
-          <div key={novels.id}>
-            <NovelMap userObj={userObj} novelObj={novels} />
-          </div>
-        ))}
-      </div>
-      {novel.length !== 0 ? (
-        <Pagination
-          total={novel.length}
-          BtnLimit={BtnLimit}
-          numPages={numPages}
-          setPage={setPage}
-          page={page}
-        />
-      ) : null}
+      <Pagination items={novel} userObj={userObj} itemsPerPage={1} />
     </div>
   );
 }
