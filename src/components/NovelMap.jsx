@@ -1,12 +1,16 @@
+import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { dbService, storageService } from "../firebase";
 
-export default function NovelMap({ userObj, novelObj }) {
+function NovelMap({ userObj, novelObj }) {
   const navigate = useNavigate();
-  const onDelete = async (id) => {
-    await dbService.doc(`novel/${id}`).delete();
-    await storageService.refFromURL(novelObj.attachmentUrl).delete();
-  };
+  const onDelete = useCallback(
+    async (id) => {
+      await dbService.doc(`novel/${id}`).delete();
+      await storageService.refFromURL(novelObj.attachmentUrl).delete();
+    },
+    [novelObj]
+  );
   return (
     <>
       {novelObj &&
@@ -43,3 +47,5 @@ export default function NovelMap({ userObj, novelObj }) {
     </>
   );
 }
+
+export default NovelMap;
