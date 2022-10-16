@@ -1,10 +1,10 @@
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
 import { dbService } from "../firebase";
+import ModifyForm from "../components/ModifyForm";
 
-export default function NovelModify() {
+export default function NovelModify({ onHome }) {
   const { id } = useParams();
-  const navigate = useNavigate();
   const [Value, setValue] = useState();
   const titleRef = useRef();
   const textRef = useRef();
@@ -31,37 +31,19 @@ export default function NovelModify() {
         text: Value.text,
       },
     });
-    navigate("/");
+    onHome();
   };
   return (
     <div>
       {Value ? (
-        <form onSubmit={onSubmit}>
-          <div>
-            <input
-              onChange={onChange}
-              type="text"
-              placeholder="제목"
-              value={Value.title || ""}
-              ref={titleRef}
-              required
-            />
-          </div>
-          <div>
-            <textarea
-              onChange={onChange}
-              value={Value.text || ""}
-              ref={textRef}
-              required
-            ></textarea>
-          </div>
-          <div>
-            <button type="submit">Modify</button>
-            <button type="button" onClick={() => navigate("/")}>
-              Close
-            </button>
-          </div>
-        </form>
+        <ModifyForm
+          onSubmit={onSubmit}
+          onChange={onChange}
+          Value={Value}
+          titleRef={titleRef}
+          textRef={textRef}
+          onHome={onHome}
+        />
       ) : (
         "Initializing..."
       )}

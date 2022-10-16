@@ -1,19 +1,23 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { dbService, authService } from "../firebase";
+import { collection, query, onSnapshot, orderBy } from "firebase/firestore";
 import Pagination from "../components/Pagination";
 
 export default function Home({ userObj }) {
   const [novel, setNovel] = useState([]);
   const [sort, setSort] = useState(true);
   useEffect(() => {
-    dbService.collection("novel").onSnapshot((snapshot) => {
-      const novelArray = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      setNovel(novelArray);
-    });
+    onSnapshot(
+      query(collection(dbService, "novel"), orderBy("createdAt", "desc")),
+      (snapshot) => {
+        const novelArray = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setNovel(novelArray);
+      }
+    );
   }, []);
   const navigate = useNavigate();
   const toggleSortClick = () => setSort((prev) => !prev);

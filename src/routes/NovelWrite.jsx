@@ -1,9 +1,8 @@
 import { useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import { dbService, storageService } from "../firebase";
 
-export default function NovelWrite({ userObj }) {
+export default function NovelWrite({ userObj, onHome }) {
   const [attachment, SetAttachment] = useState("");
   const [value, setValue] = useState({ title: "", text: "" });
   const [loading, setLoading] = useState(false);
@@ -30,8 +29,6 @@ export default function NovelWrite({ userObj }) {
     });
   };
   const onClearAttachment = () => SetAttachment(null);
-  const navigate = useNavigate();
-  const onHome = () => navigate("/");
   return (
     <div>
       <form

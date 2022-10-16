@@ -1,11 +1,10 @@
 import { useState } from "react";
 import { useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { dbService } from "../firebase";
 
-export default function NovelResult() {
+export default function NovelResult({ onHome }) {
   const { id } = useParams();
-  const navigate = useNavigate();
   const [data, setData] = useState([]);
   useEffect(() => {
     dbService.doc(`novel/${id}`).onSnapshot((snapshot) => {
@@ -25,7 +24,7 @@ export default function NovelResult() {
         <button
           type="button"
           onClick={() => {
-            navigate("/");
+            onHome();
           }}
         >
           Close
