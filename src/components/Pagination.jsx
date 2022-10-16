@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import ReactPaginate from "react-paginate";
 import NovelMap from "./NovelMap";
 import styles from "../css/Pagination.module.css";
@@ -12,10 +12,13 @@ function Pagination({ itemsPerPage, items, userObj }) {
     setCurrentItems(items.slice(itemOffset, endOffset));
     setPageCount(Math.ceil(items.length / itemsPerPage));
   }, [itemOffset, itemsPerPage, items]);
-  const handlePageClick = (event) => {
-    const newOffset = (event.selected * itemsPerPage) % items.length;
-    setItemOffset(newOffset);
-  };
+  const handlePageClick = useCallback(
+    (event) => {
+      const newOffset = (event.selected * itemsPerPage) % items.length;
+      setItemOffset(newOffset);
+    },
+    [items, itemsPerPage]
+  );
   return (
     <>
       <NovelMap novelObj={currentItems} userObj={userObj} />

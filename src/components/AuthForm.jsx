@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { authService } from "../firebase";
 
@@ -9,7 +9,9 @@ export default function AuthForm() {
     handleSubmit,
     formState: { isSubmitting, errors },
   } = useForm();
-  const toggleAccount = () => setNewAccount((prev) => !prev);
+  const toggleAccount = useCallback(() => {
+    setNewAccount(!newAccount);
+  }, [newAccount]);
   return (
     <div>
       <form

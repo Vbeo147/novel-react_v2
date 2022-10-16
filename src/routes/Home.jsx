@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { dbService, authService } from "../firebase";
 import { collection, query, onSnapshot, orderBy } from "firebase/firestore";
 import Pagination from "../components/Pagination";
 
-export default function Home({ userObj }) {
+function Home({ userObj }) {
   const [novel, setNovel] = useState([]);
   const [sort, setSort] = useState(true);
   useEffect(() => {
@@ -23,7 +23,7 @@ export default function Home({ userObj }) {
     );
   }, [sort]);
   const navigate = useNavigate();
-  const toggleSortClick = () => setSort((prev) => !prev);
+  const toggleSortClick = useCallback(() => setSort(!sort), [sort]);
   return (
     <div>
       <h1>Novel</h1>
@@ -50,3 +50,5 @@ export default function Home({ userObj }) {
     </div>
   );
 }
+
+export default Home;

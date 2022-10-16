@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import { dbService } from "../firebase";
 import ModifyForm from "../components/ModifyForm";
 
@@ -17,12 +17,12 @@ export default function NovelModify({ onHome }) {
       });
     });
   }, [id]);
-  const onChange = () => {
+  const onChange = useCallback(() => {
     setValue({
       title: titleRef.current.value,
       text: textRef.current.value,
     });
-  };
+  }, []);
   const onSubmit = async (e) => {
     e.preventDefault();
     await dbService.doc(`novel/${id}`).update({

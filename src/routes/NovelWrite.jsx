@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useCallback } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { dbService, storageService } from "../firebase";
 
@@ -8,7 +8,7 @@ export default function NovelWrite({ userObj, onHome }) {
   const [loading, setLoading] = useState(false);
   const titleRef = useRef();
   const textRef = useRef();
-  const onFileChange = (e) => {
+  const onFileChange = useCallback((e) => {
     const {
       target: { files },
     } = e;
@@ -21,14 +21,14 @@ export default function NovelWrite({ userObj, onHome }) {
       SetAttachment(result);
     };
     reader.readAsDataURL(theFile);
-  };
-  const onChange = () => {
+  }, []);
+  const onChange = useCallback(() => {
     setValue({
       title: titleRef.current.value,
       text: textRef.current.value,
     });
-  };
-  const onClearAttachment = () => SetAttachment(null);
+  }, []);
+  const onClearAttachment = useCallback(() => SetAttachment(null), []);
   return (
     <div>
       <form
