@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { dbService, authService } from "../firebase";
 import Pagination from "../components/Pagination";
-import { dbService } from "../firebase";
 
 export default function Home({ userObj }) {
   const [novel, setNovel] = useState([]);
@@ -29,6 +29,15 @@ export default function Home({ userObj }) {
           Novel Write
         </button>
         <button onClick={toggleSortClick}>{sort ? "Reverse" : "Sort"}</button>
+      </div>
+      <div>
+        <button
+          onClick={() => {
+            authService.signOut();
+          }}
+        >
+          Log Out
+        </button>
       </div>
       <Pagination
         items={novel}
