@@ -1,16 +1,14 @@
-import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import { dbService, storageService } from "../firebase";
 
 export default function NovelWrite({ userObj }) {
   const [attachment, SetAttachment] = useState("");
-  const {
-    register,
-    handleSubmit,
-    formState: { isSubmitting },
-  } = useForm();
+  const [value, setValue] = useState({ title: "", text: "" });
+  const [loading, setLoading] = useState(false);
+  const titleRef = useRef();
+  const textRef = useRef();
   const onFileChange = (e) => {
     const {
       target: { files },
@@ -25,14 +23,22 @@ export default function NovelWrite({ userObj }) {
     };
     reader.readAsDataURL(theFile);
   };
+  const onChange = () => {
+    setValue({
+      title: titleRef.current.value,
+      text: textRef.current.value,
+    });
+  };
   const onClearAttachment = () => SetAttachment(null);
   const navigate = useNavigate();
   const onHome = () => navigate("/");
   return (
     <div>
       <form
-        onSubmit={handleSubmit(async (formData) => {
-          const { title, text } = formData;
+        onSubmit={async (e) => {
+          e.preventDefault();
+          setLoading(true);
+          const { title, text } = value;
           let attachmentUrl = "";
           if (attachment !== "") {
             const attachmentRef = storageService
@@ -55,29 +61,28 @@ export default function NovelWrite({ userObj }) {
           };
           await dbService.collection("novel").add(novelObj);
           SetAttachment("");
+          setLoading(false);
           onHome();
-        })}
+        }}
       >
         <div>
           <input
-            id="title"
+            onChange={onChange}
             type="text"
-            name="title"
             placeholder="제목"
-            {...register("title")}
             required
             autoComplete="off"
+            ref={titleRef}
           />
         </div>
         <div>
           <input
-            id="text"
+            onChange={onChange}
             type="text"
-            name="text"
             placeholder="내용"
-            {...register("text")}
             required
             autoComplete="off"
+            ref={textRef}
           />
         </div>
         <div>
@@ -109,7 +114,7 @@ export default function NovelWrite({ userObj }) {
           </div>
         )}
         <div>
-          <button type="submit" disabled={isSubmitting}>
+          <button type="submit" disabled={loading}>
             Enter
           </button>
           <button type="button" onClick={onHome}>
