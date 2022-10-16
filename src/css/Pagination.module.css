@@ -16,7 +16,7 @@
 }
 
 .pagination_ul a {
-  width: inherit;
+  width: 36px;
   height: 34px;
   display: flex;
   justify-content: center;
