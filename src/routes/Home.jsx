@@ -9,7 +9,10 @@ export default function Home({ userObj }) {
   const [sort, setSort] = useState(true);
   useEffect(() => {
     onSnapshot(
-      query(collection(dbService, "novel"), orderBy("createdAt", "desc")),
+      query(
+        collection(dbService, "novel"),
+        orderBy("createdAt", sort ? "desc" : "asc")
+      ),
       (snapshot) => {
         const novelArray = snapshot.docs.map((doc) => ({
           id: doc.id,
@@ -18,7 +21,7 @@ export default function Home({ userObj }) {
         setNovel(novelArray);
       }
     );
-  }, []);
+  }, [sort]);
   const navigate = useNavigate();
   const toggleSortClick = () => setSort((prev) => !prev);
   return (
@@ -43,12 +46,7 @@ export default function Home({ userObj }) {
           Log Out
         </button>
       </div>
-      <Pagination
-        items={novel}
-        userObj={userObj}
-        itemsPerPage={5}
-        sort={sort}
-      />
+      <Pagination items={novel} userObj={userObj} itemsPerPage={5} />
     </div>
   );
 }

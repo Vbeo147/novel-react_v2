@@ -3,7 +3,7 @@ import ReactPaginate from "react-paginate";
 import NovelMap from "./NovelMap";
 import styles from "../css/Pagination.module.css";
 
-function Pagination({ itemsPerPage, items, userObj, sort }) {
+function Pagination({ itemsPerPage, items, userObj }) {
   const [currentItems, setCurrentItems] = useState(null);
   const [pageCount, setPageCount] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);
@@ -18,7 +18,7 @@ function Pagination({ itemsPerPage, items, userObj, sort }) {
   };
   return (
     <>
-      <NovelMap novelObj={currentItems} userObj={userObj} sort={sort} />
+      <NovelMap novelObj={currentItems} userObj={userObj} />
       <div className={styles.pagination_container}>
         <ReactPaginate
           breakLabel="..."
