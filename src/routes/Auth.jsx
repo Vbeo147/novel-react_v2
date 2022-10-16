@@ -53,6 +53,7 @@ export default function Auth() {
             type="email"
             name="email"
             placeholder="test@email.com"
+            autoComplete="off"
             {...register("email", {
               required: "이메일은 필수 입력란입니다.",
               pattern: {
@@ -71,6 +72,7 @@ export default function Auth() {
             type="password"
             name="password"
             placeholder="********"
+            autoComplete="off"
             {...register("password", {
               required: "비밀번호는 필수 입력란입니다.",
               minLength: {

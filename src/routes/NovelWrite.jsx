@@ -66,6 +66,7 @@ export default function NovelWrite({ userObj }) {
             placeholder="제목"
             {...register("title")}
             required
+            autoComplete="off"
           />
         </div>
         <div>
@@ -76,6 +77,7 @@ export default function NovelWrite({ userObj }) {
             placeholder="내용"
             {...register("text")}
             required
+            autoComplete="off"
           />
         </div>
         <div>
