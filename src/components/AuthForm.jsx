@@ -2,7 +2,7 @@ import { useState, useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { authService } from "../firebase";
 
-export default function AuthForm() {
+export default function AuthForm({ styles }) {
   const [newAccount, setNewAccount] = useState(true);
   const {
     register,
@@ -14,6 +14,9 @@ export default function AuthForm() {
   }, [newAccount]);
   return (
     <div>
+      <div className={styles.auth_form_title}>
+        {newAccount ? "Sign up" : "Sign in"}
+      </div>
       <form
         onSubmit={handleSubmit(async (formData) => {
           const { email, password } = formData;
@@ -38,13 +41,12 @@ export default function AuthForm() {
           }
         })}
       >
-        <div>
-          <label htmlFor="email">이메일</label>
+        <div className={styles.auth_form_input_container}>
           <input
             id="email"
             type="email"
             name="email"
-            placeholder="test@email.com"
+            placeholder="Email"
             autoComplete="off"
             {...register("email", {
               required: "이메일은 필수 입력란입니다.",
@@ -55,15 +57,20 @@ export default function AuthForm() {
             })}
             required
           />
-          {errors.email && <span>{errors.email.message}</span>}
         </div>
-        <div>
-          <label htmlFor="password">비밀번호</label>
+        <div className={styles.auth_form_error}>
+          {errors.email && (
+            <span className={styles.auth_form_error}>
+              {errors.email.message}
+            </span>
+          )}
+        </div>
+        <div className={styles.auth_form_input_container}>
           <input
             id="password"
             type="password"
             name="password"
-            placeholder="********"
+            placeholder="Password"
             {...register("password", {
               required: "비밀번호는 필수 입력란입니다.",
               minLength: {
@@ -73,21 +80,21 @@ export default function AuthForm() {
             })}
             required
           />
+        </div>
+        <div className={styles.auth_form_error}>
           {errors.password && <span>{errors.password.message}</span>}
         </div>
-        <div>
-          <button type="submit" disabled={isSubmitting}>
-            {newAccount ? "회원가입" : "로그인"}
-          </button>
-          <span
-            style={{
-              cursor: "pointer",
-              userSelect: "none",
-            }}
-            onClick={toggleAccount}
-          >
-            {newAccount ? "로그인" : "회원가입"}
-          </span>
+        <div className={styles.auth_btn_container}>
+          <div className={styles.auth_btn_submit}>
+            <button type="submit" disabled={isSubmitting}>
+              {newAccount ? "회원가입" : "로그인"}
+            </button>
+          </div>
+          <div className={styles.auth_btn_social}>
+            <span onClick={toggleAccount}>
+              {newAccount ? "로그인" : "회원가입"}
+            </span>
+          </div>
         </div>
       </form>
     </div>

@@ -28,7 +28,7 @@
   height: 24px;
   padding: 8px;
   margin: 5px 2px 5px 2px;
-  font-size: 1.22em;
+  font-size: 1.22rem;
   user-select: none;
   cursor: pointer;
   display: flex;
@@ -48,12 +48,12 @@
 
 .pagination_previous_btn {
   border-radius: 10px;
-  background-color: darkviolet;
+  background-color: plum;
   font-weight: 600;
 }
 
 .pagination_next_btn {
   border-radius: 10px;
-  background-color: darkviolet;
+  background-color: plum;
   font-weight: 600;
 }
