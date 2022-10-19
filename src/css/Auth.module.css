@@ -47,7 +47,7 @@
 
 .auth_form_input_container input::placeholder {
   color: black;
-  opacity: 0.5;
+  opacity: 0.52;
 }
 
 .auth_form_error {
