@@ -47,7 +47,7 @@ export default function AuthForm({ styles }) {
             type="email"
             name="email"
             placeholder="Email"
-            autoComplete="off"
+            autoComplete="new-password"
             {...register("email", {
               required: "이메일은 필수 입력란입니다.",
               pattern: {

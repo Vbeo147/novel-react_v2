@@ -3,7 +3,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 100px;
+  margin-top: 130px;
 }
 
 .auth_google_btn {
@@ -67,11 +67,10 @@
 .auth_btn_submit button {
   font-size: 1.1rem;
   padding: 10px;
-  border-radius: 20px;
+  border-radius: 5px;
   border: none;
-  background-color: tomato;
+  background-color: #ff4b2b;
   color: white;
-  font-weight: bold;
   width: 110px;
   margin-bottom: 10px;
 }
