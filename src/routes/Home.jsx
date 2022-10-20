@@ -28,6 +28,14 @@ function Home({ userObj }) {
   return (
     <div className={styles.home_main_container}>
       <div className={styles.home_header_container}>
+        <button
+          className={styles.home_header_logout_btn}
+          onClick={() => {
+            authService.signOut();
+          }}
+        >
+          Log Out
+        </button>
         <h1>Novel</h1>
         <span>used React & Firebase</span>
         <div className={styles.home_header_btn_container}>
@@ -40,15 +48,6 @@ function Home({ userObj }) {
           </button>
           <button onClick={toggleSortClick}>{sort ? "Reverse" : "Sort"}</button>
         </div>
-      </div>
-      <div>
-        <button
-          onClick={() => {
-            authService.signOut();
-          }}
-        >
-          Log Out
-        </button>
       </div>
       <Pagination items={novel} userObj={userObj} itemsPerPage={5} />
     </div>
