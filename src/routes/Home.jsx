@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { dbService, authService } from "../firebase";
 import { collection, query, onSnapshot, orderBy } from "firebase/firestore";
 import Pagination from "../components/Pagination";
+import styles from "../css/Home.module.css";
 
 function Home({ userObj }) {
   const [novel, setNovel] = useState([]);
@@ -25,17 +26,19 @@ function Home({ userObj }) {
   const navigate = useNavigate();
   const toggleSortClick = useCallback(() => setSort(!sort), [sort]);
   return (
-    <div>
-      <h1>Novel</h1>
-      <div>
-        <button
-          onClick={() => {
-            navigate("/write");
-          }}
-        >
-          Novel Write
-        </button>
-        <button onClick={toggleSortClick}>{sort ? "Reverse" : "Sort"}</button>
+    <div className={styles.home_main_container}>
+      <div className={styles.home_header_container}>
+        <h1>Novel</h1>
+        <div className={styles.home_header_btn_container}>
+          <button
+            onClick={() => {
+              navigate("/write");
+            }}
+          >
+            Novel Write
+          </button>
+          <button onClick={toggleSortClick}>{sort ? "Reverse" : "Sort"}</button>
+        </div>
       </div>
       <div>
         <button
