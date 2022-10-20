@@ -29,6 +29,7 @@ function Home({ userObj }) {
     <div className={styles.home_main_container}>
       <div className={styles.home_header_container}>
         <h1>Novel</h1>
+        <span>used React & Firebase</span>
         <div className={styles.home_header_btn_container}>
           <button
             onClick={() => {
