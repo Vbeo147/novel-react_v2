@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import ReactPaginate from "react-paginate";
-import NovelMap from "./NovelMap";
+import NovelList from "./NovelList";
 import styles from "../css/Pagination.module.css";
 
 function Pagination({ itemsPerPage, items, userObj }) {
@@ -21,7 +21,7 @@ function Pagination({ itemsPerPage, items, userObj }) {
   );
   return (
     <>
-      <NovelMap novelObj={currentItems} userObj={userObj} />
+      <NovelList novelObj={currentItems} userObj={userObj} />
       <div className={styles.pagination_container}>
         <ReactPaginate
           breakLabel="..."

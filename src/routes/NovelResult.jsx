@@ -5,20 +5,20 @@ import { dbService } from "../firebase";
 
 export default function NovelResult({ onHome }) {
   const { id } = useParams();
-  const [data, setData] = useState([]);
+  const [data, setData] = useState({ title: "", text: "" });
   useEffect(() => {
     dbService.doc(`novel/${id}`).onSnapshot((snapshot) => {
       const data = snapshot.data();
-      setData([data.novel.title, data.novel.text]);
+      setData({ title: data.novel.title, text: data.novel.text });
     });
   }, [id]);
   return (
     <div>
       <div>
-        <h1>{data[0]}</h1>
+        <h1>{data.title}</h1>
       </div>
       <div>
-        <p>{data[1]}</p>
+        <p>{data.text}</p>
       </div>
       <div>
         <button
