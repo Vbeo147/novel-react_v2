@@ -6,7 +6,7 @@
   border: 2.5px solid lightgray;
   border-radius: 10px;
   padding: 8px 20px;
-  width: 400px;
+  width: 550px;
   height: 60px;
   transition: all 0.28s linear;
 }
@@ -20,7 +20,7 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  width: 60%;
+  width: 80%;
   height: 100%;
   cursor: pointer;
 }
@@ -30,10 +30,12 @@
   height: 35px;
   border-radius: 10px;
   border: 1px solid lightgray;
-  margin-right: 10px;
+  margin-right: 14px;
 }
 
 .list_title_container span {
+  font-size: 1.2rem;
+  font-weight: lighter;
   margin-right: 12px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -42,10 +44,9 @@
 
 .list_btn_container {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
-  width: 40%;
+  width: 20%;
 }
 
 .list_btn_container div {

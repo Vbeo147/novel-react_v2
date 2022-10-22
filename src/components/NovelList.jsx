@@ -29,7 +29,15 @@ function NovelList({ userObj, novelObj }) {
             <div className={styles.list_btn_container}>
               {novel.creatorId === userObj.uid ? (
                 <div>
-                  <button onClick={() => onDelete(novel.id)}>Delete</button>
+                  <button
+                    onClick={() => {
+                      const answer =
+                        window.confirm("해당 글 삭제를 원하시나요?");
+                      if (answer) onDelete(novel.id);
+                    }}
+                  >
+                    Delete
+                  </button>
                   <button onClick={() => navigate(`/modify/${novel.id}`)}>
                     Modify
                   </button>

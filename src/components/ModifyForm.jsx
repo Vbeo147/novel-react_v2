@@ -8,8 +8,8 @@ export default function ModifyForm({
 }) {
   return (
     <>
-      <form onSubmit={onSubmit}>
-        <div>
+      <form onSubmit={onSubmit} className="components_input_container">
+        <div className="components_input_title_container">
           <input
             onChange={onChange}
             type="text"
@@ -17,17 +17,19 @@ export default function ModifyForm({
             value={Value.title || ""}
             ref={titleRef}
             required
+            spellcheck="false"
           />
         </div>
-        <div>
+        <div className="components_input_text_container">
           <textarea
             onChange={onChange}
             value={Value.text || ""}
             ref={textRef}
             required
+            spellcheck="false"
           ></textarea>
         </div>
-        <div>
+        <div className="components_button_container">
           <button type="submit">Modify</button>
           <button type="button" onClick={() => onHome()}>
             Close
