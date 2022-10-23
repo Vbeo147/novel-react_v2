@@ -15,8 +15,8 @@ function NovelList({ userObj, novelObj }) {
   return (
     <div>
       {novelObj &&
-        novelObj.map((novel) => (
-          <div className={styles.list_container} key={novel.id}>
+        novelObj.map((novel, index) => (
+          <div className={styles.list_container} key={novel.id} id={index}>
             <div
               onClick={() => {
                 navigate(`/result/${novel.id}`);

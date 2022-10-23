@@ -20,7 +20,7 @@ export default function WriteForm({
             required
             autoComplete="off"
             ref={titleRef}
-            spellcheck="false"
+            spellCheck="false"
           />
         </div>
         <div className="components_input_text_container">
@@ -30,7 +30,7 @@ export default function WriteForm({
             ref={textRef}
             autoComplete="off"
             required
-            spellcheck="false"
+            spellCheck="false"
           ></textarea>
         </div>
         <div className="components_input_file_container">

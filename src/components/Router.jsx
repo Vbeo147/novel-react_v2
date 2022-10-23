@@ -7,7 +7,7 @@ import NovelResult from "../routes/NovelResult";
 
 export default function AppRouter({ isLoggedIn, userObj }) {
   const navigate = useNavigate();
-  const onHome = () => navigate("/");
+  const onHome = () => navigate(-1);
   return (
     <Routes>
       {isLoggedIn ? (

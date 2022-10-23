@@ -17,7 +17,7 @@ export default function ModifyForm({
             value={Value.title || ""}
             ref={titleRef}
             required
-            spellcheck="false"
+            spellCheck="false"
           />
         </div>
         <div className="components_input_text_container">
@@ -26,7 +26,7 @@ export default function ModifyForm({
             value={Value.text || ""}
             ref={textRef}
             required
-            spellcheck="false"
+            spellCheck="false"
           ></textarea>
         </div>
         <div className="components_button_container">
