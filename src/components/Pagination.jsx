@@ -34,6 +34,7 @@ function Pagination({ itemsPerPage, items, userObj }) {
           nextClassName={styles.pagination_next_btn}
           containerClassName={styles.pagination_ul}
           activeClassName={styles.pagination_active_btn}
+          renderOnZeroPageCount={null}
         />
       </div>
     </>
