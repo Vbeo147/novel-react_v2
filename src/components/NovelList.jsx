@@ -5,13 +5,10 @@ import styles from "../css/List.module.css";
 
 function NovelList({ userObj, novelObj }) {
   const navigate = useNavigate();
-  const onDelete = useCallback(
-    async (id) => {
-      await dbService.doc(`novel/${id}`).delete();
-      await storageService.refFromURL(novelObj.attachmentUrl).delete();
-    },
-    [novelObj]
-  );
+  const onDelete = useCallback(async (id, attachment) => {
+    await dbService.doc(`novel/${id}`).delete();
+    await storageService.refFromURL(attachment).delete();
+  }, []);
   return (
     <div>
       {novelObj &&
@@ -33,7 +30,7 @@ function NovelList({ userObj, novelObj }) {
                     onClick={() => {
                       const answer =
                         window.confirm("해당 글 삭제를 원하시나요?");
-                      if (answer) onDelete(novel.id);
+                      if (answer) onDelete(novel.id, novel.attachmentUrl);
                     }}
                   >
                     Delete

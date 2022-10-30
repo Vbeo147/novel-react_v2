@@ -27,7 +27,7 @@
 
 .list_title_container img {
   width: 40px;
-  height: 40px;
+  height: auto;
   border-radius: 10px;
   border: 1px solid lightgray;
   margin-right: 14px;
